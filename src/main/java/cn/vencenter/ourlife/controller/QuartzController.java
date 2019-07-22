@@ -22,4 +22,8 @@ public class QuartzController {
     public void start() {
         jobService.triggerJob("task1","jaychou");
     }
+
+
+
+
 }
