@@ -5,6 +5,9 @@ import cn.vencenter.ourlife.job.MyJob;
 import cn.vencenter.ourlife.service.JobService;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,9 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class JobServiceImpl implements JobService {
+
+    @Autowired
+    private MailSender mailSender;
 
     @Autowired
     private Scheduler scheduler;
@@ -32,7 +38,7 @@ public class JobServiceImpl implements JobService {
             Class<MyJob> aClass = (Class<MyJob>)Class.forName(quartzJob.getJobClassName());
             JobDetail jobDetail = JobBuilder.newJob(aClass).withIdentity(quartzJob.getJobName(), quartzJob.getJobGroup()).withDescription(quartzJob.getDescription()).build();
             CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(quartzJob.getCronExpression());
-            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(quartzJob.getJobName() + quartzJob.getJobName(), quartzJob.getJobGroup()).withSchedule(cronScheduleBuilder).startNow().build();
+            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(quartzJob.getJobName() + quartzJob.getJobName(), quartzJob.getJobGroup()).withSchedule(cronScheduleBuilder).build();
             scheduler.scheduleJob(jobDetail,trigger);
         }catch (Exception e){
             e.printStackTrace();
@@ -67,6 +73,12 @@ public class JobServiceImpl implements JobService {
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    @Async
+    public void sendMail(SimpleMailMessage simpleMailMessage) {
+        mailSender.send(simpleMailMessage);
     }
 
     @Override

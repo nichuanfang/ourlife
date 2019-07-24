@@ -1,0 +1,52 @@
+server:
+  port: 80
+
+spring:
+  thymeleaf:
+    cache: false
+    suffix: .html
+    prefix: classpath:/templates/
+  #连接池配置
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://www.vencenter.cn:3306/apg?useSSL=false&amp&serverTimezone=UTC&characterEncoding=utf-8&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  quartz:
+    #相关属性配置
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: quartzScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            isClustered: false
+            clusterCheckinInterval: 10000
+            useProperties: false
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+    #数据库方式
+    job-store-type: JDBC
+    #初始化表结构
+    jdbc:
+      initialize-schema: NEVER
+#mybatis配置
+mybatis:
+  type-aliases-package: com.vencenter.ourlife.entity
+  mapper-locations: classpath:/mapper/*.xml
+#分页配置, pageHelper是物理分页插件
+pagehelper:
+  #4.0.0以后版本可以不设置该参数，该示例中是5.1.4
+  helper-dialect: mysql
+  #启用合理化，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页
+  reasonable: true
+logging:
+  level:
+    com.lee.quartz.mapper: debug

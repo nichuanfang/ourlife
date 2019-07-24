@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @version:
  **/
 @Controller
+@RequestMapping("/quartz")
 public class QuartzController {
 
     @Autowired
@@ -20,10 +21,13 @@ public class QuartzController {
 
     @RequestMapping("/start")
     public void start() {
+
         jobService.triggerJob("task1","jaychou");
     }
 
-
-
+    @RequestMapping("/stop")
+    public void stop() {
+        jobService.removeJob("task1","jaychou");
+    }
 
 }

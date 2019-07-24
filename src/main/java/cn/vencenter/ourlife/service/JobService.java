@@ -2,6 +2,7 @@ package cn.vencenter.ourlife.service;
 
 import cn.vencenter.ourlife.entity.QuartzJob;
 import org.quartz.Job;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 /**
@@ -22,4 +23,6 @@ public interface JobService {
     void resumeJob(String jobName,String jobGroup);
 
     void removeJob(String jobName,String jobGroup);
+
+    void sendMail(SimpleMailMessage simpleMailMessage);
 }
