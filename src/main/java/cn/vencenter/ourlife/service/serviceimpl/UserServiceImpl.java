@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(UserInfo userInfo) {
+        sdgsd
         User user = userRepository.findByUsername(userInfo.getUsername());
         if(user==null || !(userInfo.getPassword().equals(user.getPassword()))) {
             return null;
