@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean findByUsername(String username) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(usernccccame);
         if(user==null) {
             return true;
         }
