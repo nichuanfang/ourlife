@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(UserInfo userInfo) {
         User user = new User();
+        dfgfxd
         BeanUtils.copyProperties(userInfo,user);
         String uuid = UUID.randomUUID().toString();
         user.setUuid(uuid);
